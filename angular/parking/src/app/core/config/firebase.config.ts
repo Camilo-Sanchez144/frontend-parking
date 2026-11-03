@@ -6,12 +6,12 @@
  * dominios autorizados del proyecto.
  */
 export const FIREBASE_CONFIG = {
-  apiKey: 'AIzaSyCFB-N_V_UapsmVo7EUgcDxzL8Co4Zbq3Y',
-  authDomain: 'parking-48614.firebaseapp.com',
-  projectId: 'parking-48614',
-  storageBucket: 'parking-48614.firebasestorage.app',
-  messagingSenderId: '206293644758',
-  appId: '1:206293644758:web:dcad44be2621128044a077',
+  apiKey: "AIzaSyAtd1ZbDqa93U5mxNxCsjc8AOL8wunLnzI",
+  authDomain: "uniparking-dev.firebaseapp.com",
+  projectId: "uniparking-dev",
+  storageBucket: "uniparking-dev.firebasestorage.app",
+  messagingSenderId: "746330390405",
+  appId: "1:746330390405:web:7fe80abec461049a150eec"
 };
 
 /**
