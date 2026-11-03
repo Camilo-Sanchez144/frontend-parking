@@ -353,3 +353,9 @@
     transition: none;
   }
 }
+.actions__hint {
+  margin: 0;
+  text-align: center;
+  font-size: 0.875rem;
+  color: #5b6472;
+}

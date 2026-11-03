@@ -35,14 +35,32 @@
     </header>
 
     <div class="actions">
-      <button
+          @if (demoMode) {
+      <p class="actions__hint">Modo demostración: elige un rol para entrar</p>
+      @for (account of demoAccounts; track account.email) {
+        <button
+          type="button"
+          class="btn btn--primary"
+          [disabled]="loading()"
+          [attr.aria-busy]="loading()"
+          [attr.title]="account.description"
+          (click)="signInAsDemo(account)"
+        >
+          @if (loading()) {
+            <span class="btn__spinner" aria-hidden="true"></span>
+          }
+          <span>Entrar como {{ account.label }}</span>
+        </button>
+      }
+    } 
+    <button
         type="button"
         class="btn btn--primary"
         [disabled]="loading()"
         [attr.aria-busy]="loading()"
         (click)="signInWithMicrosoft()"
       >
-        @if (loading()) {
+      @if (loading()) {
           <span class="btn__spinner" aria-hidden="true"></span>
           <span>Conectando con Microsoft…</span>
         } @else {

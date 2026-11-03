@@ -40,6 +40,7 @@ export const TEST_ACCOUNTS: Record<UserRole, AuthUser> = {
 /** Firebase de mentira: arranca sin sesión y nunca sale a la red. */
 const firebaseWithoutSession: FirebaseAuthGateway = {
   signInWithMicrosoft: async () => null,
+  signInWithEmail: async () => null,
   resolvePendingRedirect: async () => null,
   signOut: async () => {},
   currentUser: async () => null,

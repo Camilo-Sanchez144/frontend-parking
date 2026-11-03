@@ -46,6 +46,9 @@ const ERROR_MESSAGES: Record<string, string> = {
   'auth/account-exists-with-different-credential': 'Ya existe una cuenta registrada con ese correo.',
   'auth/unauthorized-domain': 'Este dominio no está autorizado en Firebase. Avisa al administrador.',
   'auth/operation-not-allowed': 'El acceso con Microsoft no está habilitado en Firebase.',
+  'auth/invalid-credential': 'Correo o contraseña incorrectos.',
+  'auth/wrong-password': 'Correo o contraseña incorrectos.',
+  'auth/user-not-found': 'Correo o contraseña incorrectos.',
   'auth/invalid-domain': `Debes ingresar con tu correo institucional @${BRAND.emailDomain}.`,
 };
 
@@ -130,7 +133,21 @@ export class AuthService {
       this._loading.set(false);
     }
   }
+  /** Acceso con correo y contraseña (cuentas de demostración). */
+  async loginWithEmail(email: string, password: string): Promise<AuthUser | null> {
+    this._loading.set(true);
+    this._error.set(null);
 
+    try {
+      const account = await this.firebase.signInWithEmail(email, password);
+      return account ? await this.openSession(account) : null;
+    } catch (error) {
+      this._error.set(this.describe(error));
+      return null;
+    } finally {
+      this._loading.set(false);
+    }
+  }
   /**
    * Recoge el acceso por redirección al volver de Microsoft (app nativa). La
    * pantalla de acceso la llama al montarse.

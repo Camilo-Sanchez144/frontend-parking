@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { BRAND } from '../../core/config/branding.config';
+import { DEMO_ACCOUNTS, DEMO_MODE, type DemoAccount } from '../../core/config/demo.config';
 import { homeFor } from '../../core/guards/auth.guards';
 import { AuthService, type AuthUser } from '../../core/services/auth/auth.service';
 
@@ -20,6 +21,8 @@ export class Login {
 
   /** Todo el texto y la identidad visible salen de la marca activa. */
   protected readonly brand = BRAND;
+  protected readonly demoMode = DEMO_MODE;
+  protected readonly demoAccounts = DEMO_ACCOUNTS;
   protected readonly loading = this.auth.loading;
   protected readonly error = this.auth.error;
   protected readonly currentYear = new Date().getFullYear();
@@ -44,7 +47,13 @@ export class Login {
 
     await this.enterDashboard(await this.auth.loginWithMicrosoft());
   }
+  protected async signInAsDemo(account: DemoAccount): Promise<void> {
+    if (this.loading()) {
+      return;
+    }
 
+    await this.enterDashboard(await this.auth.loginWithEmail(account.email, account.password));
+  }
   /** Abre el formulario de visitantes, que no necesita sesión. */
   protected goToVisitors(): void {
     this.auth.clearError();

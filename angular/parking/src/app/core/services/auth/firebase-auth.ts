@@ -32,6 +32,7 @@ const wrapUser = (pluginUser: any): User | null => {
 
 export interface FirebaseAuthGateway {
   signInWithMicrosoft(): Promise<User | null>;
+  signInWithEmail(email: string, password: string): Promise<User | null>;
   resolvePendingRedirect(): Promise<User | null>;
   signOut(): Promise<void>;
   currentUser(): Promise<User | null>;
@@ -39,6 +40,10 @@ export interface FirebaseAuthGateway {
 }
 
 const firebaseAuthGateway: FirebaseAuthGateway = {
+    async signInWithEmail(email: string, password: string) {
+    const result = await FirebaseAuthentication.signInWithEmailAndPassword({ email, password });
+    return wrapUser(result.user);
+  },
   async signInWithMicrosoft() {
     const result = await FirebaseAuthentication.signInWithMicrosoft({
       customParameters: [
